@@ -1,0 +1,172 @@
+<%- layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/stylesheets/stars.css">
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="p-3 pb-0 border border-bottom-0 bg-white rounded-top shadow">
+                <% if(city.images.length > 0) { %>
+                <div id="carouselCityIndicators" class="carousel slide" data-bs-ride="true">
+                    <div class="carousel-indicators">
+                        <% city.images.forEach((img, i) => { %>
+                        <button type="button" data-bs-target="#carouselCityIndicators" data-bs-slide-to="<%= i %>"
+                            class="<%= i === 0 ? 'active' : '' %>" aria-current="<%= i === 0 ? 'true' : '' %>"
+                            aria-label="Slide <%= ++i %>"></button>
+                        <% }) %>
+                    </div>
+                    <div class="carousel-inner">
+                        <% city.images.forEach((img, i) => { %>
+                        <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                            <img src="<%= img.url %>" id="show-page-image" class="d-block w-100 rounded" alt=""
+                                crossorigin>
+                            <% if(img.imageTitle) { %>
+                            <div class="carousel-caption">
+                                <!-- <div class="carousel-caption d-none d-md-block"> -->
+                                <p id="show-page-line-break"><%= img.imageTitle %></p>
+                            </div>
+                            <% } %>
+                        </div>
+                        <% }) %>
+                    </div>
+                    <% if(city.images.length > 1) { %>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselCityIndicators"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselCityIndicators"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    <% } %>
+                </div>
+                <% }else { %>
+                <img src="https://res.cloudinary.com/dkobewcwg/image/upload/v1670432941/SmartCityRating/hrpayifjosdyp3jxqsm9.png"
+                    class="d-block w-100" alt="" crossorigin>
+                <% } %>
+            </div>
+
+            <div class="card border-top-0 mb-3 rounded-0 rounded-bottom shadow">
+                <div class="card-body">
+                    <h2 class="card-title"><%= city.cityname %>, <%= city.state %></h2>
+                    <p class="card-text" id="show-page-line-break"><%= city.description %></p>
+                </div>
+                <ul class="list-group list-group-flush border-top">
+                    <li class="list-group-item fs-5">Population: <%= city.population %></li>
+                    <li class="list-group-item text-muted fs-5">Submitted By: <%= city.author.username %></li>
+                </ul>
+                <% if(currentUser && city.author.equals(currentUser._id)) { %>
+                <div class="card-body">
+                    <a href="/cities/<%= city._id %>/edit" class="card-link btn btn-warning">Edit</a>
+                    <form class="d-inline" action="/cities/<%= city._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">DELETE</button>
+                    </form>
+                </div>
+                <% } %>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="bg-white mb-3 rounded shadow p-3">
+
+                <div id='map' class="mb-3 rounded"></div>
+
+                <% if(currentUser) { %>
+                <h2 class="mb-3">Leave a Review</h2>
+                <form action="/cities/<%= city._id %>/reviews" method="POST" class="mb-3 validated-form" novalidate>
+
+                    <div class="mb-3">
+                        <fieldset class="starability-growRotate">
+                            <legend id="rating-label">Ease of Living:</legend>
+                            <input type="radio" id="no-rate" class="input-no-rate" name="review[easeOfLiving]" value="1"
+                                checked aria-label="No rating." />
+                            <input type="radio" id="first-rate1" name="review[easeOfLiving]" value="1" />
+                            <label for="first-rate1" title="Terrible">1 star rating on ease of living</label>
+                            <input type="radio" id="first-rate2" name="review[easeOfLiving]" value="2" />
+                            <label for="first-rate2" title="Not good">2 stars rating on ease of living</label>
+                            <input type="radio" id="first-rate3" name="review[easeOfLiving]" value="3" />
+                            <label for="first-rate3" title="Average">3 stars rating on ease of living</label>
+                            <input type="radio" id="first-rate4" name="review[easeOfLiving]" value="4" />
+                            <label for="first-rate4" title="Very good">4 stars rating on ease of living</label>
+                            <input type="radio" id="first-rate5" name="review[easeOfLiving]" value="5" />
+                            <label for="first-rate5" title="Amazing">5 stars rating on ease of living</label>
+                        </fieldset>
+                    </div>
+
+                    <div class="mb-3">
+                        <fieldset class="starability-growRotate">
+                            <legend id="rating-label-2">Municipal
+                                Performance:</legend>
+                            <input type="radio" id="no-rate" class="input-no-rate" name="review[municipalPerformance]"
+                                value="1" checked aria-label="No rating." />
+                            <input type="radio" id="second-rate1" name="review[municipalPerformance]" value="1" />
+                            <label for="second-rate1" title="Terrible">1 star rating on municipal performance</label>
+                            <input type="radio" id="second-rate2" name="review[municipalPerformance]" value="2" />
+                            <label for="second-rate2" title="Not good">2 stars rating on municipal performance</label>
+                            <input type="radio" id="second-rate3" name="review[municipalPerformance]" value="3" />
+                            <label for="second-rate3" title="Average">3 stars rating on municipal performance</label>
+                            <input type="radio" id="second-rate4" name="review[municipalPerformance]" value="4" />
+                            <label for="second-rate4" title="Very good">4 stars rating on municipal performance</label>
+                            <input type="radio" id="second-rate5" name="review[municipalPerformance]" value="5" />
+                            <label for="second-rate5" title="Amazing">5 stars rating on municipal performance</label>
+                        </fieldset>
+                    </div>
+
+                    <div class="mb-3">
+                        <legend for="body" class="form-label">Review: </legend>
+                        <textarea name="review[body]" class="form-control" id="body" cols="30" rows="3"
+                            placeholder="Write something..." required></textarea>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <button class="btn btn-success">Submit</button>
+                </form>
+                <% } else { %>
+                <a href="/login?returnTo=/cities/<%= city._id %>" class="btn btn-lg btn-primary mb-3">Leave a Review</a>
+                <% } %>
+
+                <% for(let review of city.reviews) { %>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-subtitle mb-2 text-muted"><%= review.author.username %></h5>
+
+                        <div class="row">
+                            <dir class="col-xxl-5 m-0">
+                                <p class="m-0" id="show-page-text">Ease of Living:
+                                    <span class="starability-result" data-rating="<%= review.easeOfLiving %>">Ease of
+                                        Living:<%= review.easeOfLiving %></span>
+                                </p>
+                            </dir>
+                            <div class="col-xxl-7 m-0">
+                                <p class="m-0" id="show-page-text-2">Municipal
+                                    Performance: <span class="starability-result"
+                                        data-rating="<%= review.municipalPerformance %>">MunicipalPerformance:<%= review.municipalPerformance %></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <p class="card-text" id="show-page-line-break"><span id="show-page-text">Review:
+                            </span><%= review.body %>
+                        </p>
+                        <% if(currentUser && review.author.equals(currentUser._id)) { %>
+                        <form action="/cities/<%= city._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-sm btn-danger">DELETE</button>
+                        </form>
+                        <% } %>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+    const city = <%- JSON.stringify(city) %>
+</script>
+
+<script src="/javascripts/showPageMap.js"></script>

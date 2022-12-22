@@ -1,0 +1,55 @@
+<%- layout('layouts/boilerplate') %>
+
+
+<div class="row flex-column-reverse flex-md-row mx-3 mt-5">
+
+    <div class="col-md-6 mb-3">
+
+        <div class="bg-white p-3 rounded shadow">
+            <h1>All Cities</h1>
+
+            <% for (let city of cities) { %>
+            <div class="card mb-3 shadow">
+                <div class="row mx-0">
+                    <div class="col-lg-4 p-0">
+                        <% if(city.images.length) { %>
+                        <img class="img-fluid d-block w-100 h-100" src="<%= city.images[0].url %>" alt=""
+                            id="index-page-image" crossorigin>
+                        <% }else { %>
+                        <img class="img-fluid d-block w-100 h-100"
+                            src="https://res.cloudinary.com/dkobewcwg/image/upload/v1670432941/SmartCityRating/hrpayifjosdyp3jxqsm9.png"
+                            alt="" id="index-page-image" crossorigin>
+                        <% } %>
+                    </div>
+                    <div class="col-lg-8 d-flex flex-column justify-content-between">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= city.cityname %>, <%= city.state %></h5>
+                            <p class="card-text" id="index-page-description"><%= city.description %></p>
+                        </div>
+                        <div class="card-footer">
+                            <a class="btn btn-primary" href="/cities/<%= city._id %>">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+
+    </div>
+
+
+    <div class="col-md-6 mb-3" id="index-page-map">
+        <div class="bg-white px-3 py-2 rounded shadow">
+            <div id="cluster-map"></div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+    const cities = { features: <%- JSON.stringify(cities) %>}
+</script>
+
+<script src="/javascripts/clusterMap.js"></script>

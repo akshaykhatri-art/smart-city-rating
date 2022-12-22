@@ -1,0 +1,46 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container mt-5">
+    <div class="container d-flex justify-content-center align-items-center mt-5">
+        <div class="card shadow mb-3" id="login-register-card">
+            <div class="row g-0">
+                <div class="col-md-6">
+                    <img src="https://res.cloudinary.com/dkobewcwg/image/upload/v1670678765/SmartCityRating/rrfqg2k1g50pjke4wjjt.jpg"
+                        class="img-fluid rounded-start" alt="..." crossorigin>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <h4 class="card-title mb-3">Register</h4>
+                        <form action="/register" method="POST" class="validated-form" novalidate>
+                            <div class="mb-3">
+                                <label class="form-label" for="username">Username</label>
+                                <input class="form-control" type="text" id="username" name="username" autofocus
+                                    required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="email">Email</label>
+                                <input class="form-control" type="email" id="email" name="email" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="password">Password</label>
+                                <input class="form-control" type="password" id="password" name="password" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-success btn-block">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

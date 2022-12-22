@@ -1,0 +1,61 @@
+<%- layout('layouts/boilerplate') %>
+
+
+<div class="container mt-5 mb-3">
+    <div class="row">
+
+        <div class="col-md-6 offset-md-3 bg-white shadow rounded">
+            <h1 class="text-center mt-2">New City</h1>
+            <form action="/cities" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label" for="cityname">City Name</label>
+                    <input class="form-control" type="text" id="cityname" name="city[cityname]" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="state">State</label>
+                    <input class="form-control" type="text" id="state" name="city[state]" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Images</label>
+                    <input class="form-control" type="file" name="image" id="image" multiple>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="population">Population</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="population-label">@</span>
+                        <input type="text" class="form-control" id="populaiton" placeholder="0" aria-label="populaiton"
+                            aria-describedby="population-label" name="city[population]" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description Url</label>
+                    <textarea class="form-control" type="text" id="description" name="city[description]"
+                        required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="btn-group d-flex justify-content-between mb-3">
+                    <div>
+                        <button class="btn btn-success">Add City</button>
+                    </div>
+                    <div>
+                        <a class="btn btn-danger" href="/cities">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
