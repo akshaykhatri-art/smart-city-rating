@@ -1,9 +1,17 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
+
 const mongoose = require('mongoose');
 const cities = require('./cities')
 const City = require('../models/city');
 const { urlencoded } = require('express');
 
-mongoose.connect('mongodb://localhost:27017/smart-city-rating');
+
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/smart-city-rating'
+
+mongoose.connect(dbUrl);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
